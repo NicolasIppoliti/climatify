@@ -34,7 +34,7 @@ function WeatherContainer() {
         return { location, error };
     };
 
-    const { location, error } = GeoLocation();
+    const { location } = GeoLocation();
 
     const [weather, setWeather] = useState({});
     
