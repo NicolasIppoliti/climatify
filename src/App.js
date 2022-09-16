@@ -1,22 +1,12 @@
-import logo from './logo.svg';
+import WeatherContainer from "./components/WeatherContainer/WeatherContainer";
 import './App.css';
 
 function App() {
   return (
-    <div className="App">
+    <div className="bg-gray-800 font-sans w-full h-full items-center justify-center">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1 className="text-4xl">Climatify</h1>
+        <WeatherContainer/>
       </header>
     </div>
   );
