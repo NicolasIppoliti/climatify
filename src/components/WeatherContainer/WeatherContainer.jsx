@@ -4,9 +4,9 @@ import HourlyWeather from './HourlyWeather/HourlyWeather';
 
 function WeatherContainer() {
 
-    const [city, setCity] = useState('');
+    // const [city, setCity] = useState('');
     const APIkey = '2651f08b94c06a57dfeac2a55c2ca245';
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=metric&lang=es`;
+    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=metric&lang=es`;
 
     const GeoLocation = () => {
         const [location, setLocation] = useState({});
@@ -49,40 +49,40 @@ function WeatherContainer() {
         }
     }, [location]);
 
-    const day = new Date();
+    // const day = new Date();
 
-    const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
-    const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    // const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+    // const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.get(url)
-        .then(res => {
-            setWeather(res.data);
-        })
-    }
+    // const handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     axios.get(url)
+    //     .then(res => {
+    //         setWeather(res.data);
+    //     })
+    // }
 
-    const handleChange = (e) => {
-        setCity(e.target.value);
-    }
+    // const handleChange = (e) => {
+    //     setCity(e.target.value);
+    // }
 
-    const handleKeypress = e => {
-        if (e.charCode === 13) {
-            e.preventDefault();
-            axios.get(url)
-            .then(res => {
-            setWeather(res.data);
-            })
-        }
-    }
+    // const handleKeypress = e => {
+    //     if (e.charCode === 13) {
+    //         e.preventDefault();
+    //         axios.get(url)
+    //         .then(res => {
+    //         setWeather(res.data);
+    //         })
+    //     }
+    // }
 
     const background = {
         backgroundImage: `url(https://source.unsplash.com/1600x900/?${weather.weather && weather.weather[0].main})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
+        height: '100%',
         width: '100%',
-        position: 'absolute',
         zIndex: '-1',
         top: '0',
         left: '0',
@@ -111,6 +111,15 @@ function WeatherContainer() {
                 <div className='m-5 p-5 grid border-2 border-hidden rounded-lg bg-black bg-opacity-25 justify-center sm:box sm:col-start-2 sm:col-span-2'>
                     <h5 className='text-sm mb-3'>PRONOSTICO PARA LAS PROXIMAS HORAS</h5>
                     <HourlyWeather/>
+                </div>
+                <div className='m-5 p-5 grid grid-cols-2 border-2 border-hidden rounded-lg bg-black bg-opacity-25 justify-center sm:box sm:col-start-2 sm:col-span-2'>
+                    <div className='col-span-1'>
+                        <h5 className='text-sm mb-3'>ATARDECER</h5>
+                        <div>
+                            <h5 className='text-lg'>{(weather.sys.sunset).slice(11,16)}</h5>
+                            <h5 className='text-sm'>Amanecer: {(weather.sys.sunrise).slice(11,16)}</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
             )}
