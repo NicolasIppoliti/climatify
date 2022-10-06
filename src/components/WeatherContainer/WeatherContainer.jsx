@@ -87,7 +87,7 @@ function WeatherContainer() {
         zIndex: '-1',
         top: '0',
         left: '0',
-        opacity: '0.8',
+        opacity: '0.9',
     }
 
     const sunset = () => {
