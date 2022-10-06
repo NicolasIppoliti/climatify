@@ -81,6 +81,7 @@ function WeatherContainer() {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
+        position: 'relative',
         height: '100%',
         width: '100%',
         zIndex: '-1',
@@ -89,10 +90,47 @@ function WeatherContainer() {
         opacity: '0.8',
     }
 
+    const sunset = () => {
+        const sunset = new Date(weather.sys.sunset * 1000);
+        const sunsetHour = sunset.getHours();
+        const sunsetMinutes = "0" + sunset.getMinutes();
+        const sunsetTime = sunsetHour + ':' + sunsetMinutes.substr(-2);
+        return sunsetTime;
+    }
+
+    const sunrise = () => {
+        const sunrise = new Date(weather.sys.sunrise * 1000);
+        const sunriseHour = sunrise.getHours();
+        const sunriseMinutes = "0" + sunrise.getMinutes();
+        const sunriseTime = sunriseHour + ':' + sunriseMinutes.substr(-2);
+        return sunriseTime;
+    }
+
+    const windDirection = () => {
+        const windDirection = weather.wind.deg;
+        if (windDirection >= 0 && windDirection < 45) {
+            return 'Norte';
+        } else if (windDirection >= 45 && windDirection < 90) {
+            return 'Noreste';
+        } else if (windDirection >= 90 && windDirection < 135) {
+            return 'Este';
+        } else if (windDirection >= 135 && windDirection < 180) {
+            return 'Sureste';
+        } else if (windDirection >= 180 && windDirection < 225) {
+            return 'Sur';
+        } else if (windDirection >= 225 && windDirection < 270) {
+            return 'Suroeste';
+        } else if (windDirection >= 270 && windDirection < 315) {
+            return 'Oeste';
+        } else if (windDirection >= 315 && windDirection < 360) {
+            return 'Noroeste';
+        }
+    }
+
     return (
-        <div style={background}>
+        <div className='w-full h-full' style={background}>
             {weather.main && (
-            <div className='mt-16 sm:grid sm:overflow-hidden sm:grid-cols-3 sm:grid-rows-2 sm:gap-2'>
+            <div className='pt-10 sm:grid sm:overflow-hidden sm:grid-cols-3 sm:grid-rows-2 sm:gap-2'>
                 <div className='sm:box sm:row-span-2'>
                     <div className=''>
                         <h1 className='text-4xl'>{weather.name}</h1>
@@ -108,16 +146,25 @@ function WeatherContainer() {
                         <span className='text-lg'>Max.: {(weather.main.temp_max).toFixed(0)}° Min.: {(weather.main.temp_min).toFixed(0)}°</span>
                     </div>
                 </div>
-                <div className='m-5 p-5 grid border-2 border-hidden rounded-lg bg-black bg-opacity-25 justify-center sm:box sm:col-start-2 sm:col-span-2'>
+                <div className='m-4 p-4 grid border-2 border-hidden rounded-lg bg-black bg-opacity-25 justify-center sm:box sm:col-start-2 sm:col-span-2'>
                     <h5 className='text-sm mb-3'>PRONOSTICO PARA LAS PROXIMAS HORAS</h5>
                     <HourlyWeather/>
                 </div>
-                <div className='m-5 p-5 grid grid-cols-2 border-2 border-hidden rounded-lg bg-black bg-opacity-25 justify-center sm:box sm:col-start-2 sm:col-span-2'>
-                    <div className='col-span-1'>
-                        <h5 className='text-sm mb-3'>ATARDECER</h5>
+                <div className='px-4 pb-4 grid grid-cols-2 gap-2 justify-center sm:box sm:col-start-2 sm:col-span-2'>
+                    <div className='p-4 col-span-1 border-2 border-hidden rounded-lg bg-black bg-opacity-25'>
+                        <h5 className='text-xs mb-2'>VIENTO</h5>
                         <div>
-                            <h5 className='text-lg'>{(weather.sys.sunset).slice(11,16)}</h5>
-                            <h5 className='text-sm'>Amanecer: {(weather.sys.sunrise).slice(11,16)}</h5>
+                            <h5 className='text-3xl'>
+                                {(weather.wind.speed).toFixed(0)} m/s
+                            </h5>
+                            <h5 className='text-sm'>{windDirection()}</h5>
+                        </div>
+                    </div>
+                    <div className='p-4 col-span-1 border-2 border-hidden rounded-lg bg-black bg-opacity-25'>
+                        <h5 className='text-xs mb-2'>ATARDECER</h5>
+                        <div>
+                            <h5 className='text-3xl'>{sunset()}</h5>
+                            <h5 className='text-sm'>Amanecer: {sunrise()}</h5>
                         </div>
                     </div>
                 </div>
