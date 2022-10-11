@@ -44,7 +44,7 @@ function WeatherContainer() {
             axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&units=metric&appid=${APIkey}&lang=es`)
             .then(res => {
                 setWeather(res.data);
-                console.log(res.data);
+                // console.log(res.data);
             })
         }
     }, [location]);
@@ -146,25 +146,59 @@ function WeatherContainer() {
                         <span className='text-lg'>Max.: {(weather.main.temp_max).toFixed(0)}° Min.: {(weather.main.temp_min).toFixed(0)}°</span>
                     </div>
                 </div>
-                <div className='m-4 p-4 grid border-2 border-hidden rounded-lg bg-black bg-opacity-25 justify-center sm:box sm:col-start-2 sm:col-span-2'>
+                <div className='m-5 p-5 grid border-2 border-hidden rounded-lg bg-black bg-opacity-25 justify-center sm:box sm:col-start-2 sm:col-span-2'>
                     <h5 className='text-sm mb-3'>PRONOSTICO PARA LAS PROXIMAS HORAS</h5>
                     <HourlyWeather/>
                 </div>
-                <div className='px-4 pb-4 grid grid-cols-2 gap-2 justify-center sm:box sm:col-start-2 sm:col-span-2'>
-                    <div className='p-4 col-span-1 border-2 border-hidden rounded-lg bg-black bg-opacity-25'>
+                <div className='px-5 pb-4 grid grid-cols-2 gap-2 justify-center sm:box sm:col-start-2 sm:col-span-2'>
+                    <div className='p-5 col-span-1 border-2 border-hidden rounded-lg bg-black bg-opacity-25'>
                         <h5 className='text-xs mb-2'>VIENTO</h5>
                         <div>
                             <h5 className='text-3xl'>
-                                {(weather.wind.speed).toFixed(0)} m/s
+                                {((weather.wind.speed)*3.5).toFixed(0)}
+                                <span className='text-xl'> km/h</span>
                             </h5>
                             <h5 className='text-sm'>{windDirection()}</h5>
                         </div>
                     </div>
-                    <div className='p-4 col-span-1 border-2 border-hidden rounded-lg bg-black bg-opacity-25'>
+                    <div className='p-5 col-span-1 border-2 border-hidden rounded-lg bg-black bg-opacity-25'>
                         <h5 className='text-xs mb-2'>ATARDECER</h5>
                         <div>
                             <h5 className='text-3xl'>{sunset()}</h5>
                             <h5 className='text-sm'>Amanecer: {sunrise()}</h5>
+                        </div>
+                    </div>
+                    <div className='p-5 col-span-1 border-2 border-hidden rounded-lg bg-black bg-opacity-25'>
+                        <h5 className='text-xs mb-2'>PRESION</h5>
+                        <div>
+                            <h5 className='text-3xl'>{(weather.main.pressure)}</h5>
+                            <h5 className='text-sm'>hPa</h5>
+                        </div>
+                    </div>
+                    <div className='p-5 col-span-1 border-2 border-hidden rounded-lg bg-black bg-opacity-25'>
+                        <h5 className='text-xs mb-2'>SENSACION</h5>
+                        <div>
+                            <h5 className='text-3xl'>{(weather.main.feels_like).toFixed(0)}°</h5>
+                            <h5 className='text-sm'>
+                                <span className='uppercase'>{(weather.weather[0].description).slice(0,1)}</span>
+                                <span>{(weather.weather[0].description).slice(1)}</span>
+                            </h5>
+                        </div>
+                    </div>
+                    <div className='p-5 col-span-1 border-2 border-hidden rounded-lg bg-black bg-opacity-25'>
+                        <h5 className='text-xs mb-2'>HUMEDAD</h5>
+                        <div>
+                            <h5 className='text-3xl'>{(weather.main.humidity)} %</h5>
+                            <h5 className='text-sm'>Nubosidad: {(weather.clouds.all)} %</h5>
+                        </div>
+                    </div>
+                    <div className='p-5 col-span-1 border-2 border-hidden rounded-lg bg-black bg-opacity-25'>
+                        <h5 className='text-xs mb-2'>VISIBILIDAD</h5>
+                        <div>
+                            <h5 className='text-3xl'>{(weather.visibility)/1000}
+                                <span className='text-xl'> km</span>
+                            </h5>
+                            <h5 className='text-sm'>{weather.name}</h5>
                         </div>
                     </div>
                 </div>
