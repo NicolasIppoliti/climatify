@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const HourlyWeather = () => {
-    // const [city, setCity] = useState('');
+    const [city, setCity] = useState('');
     const APIkey = '2651f08b94c06a57dfeac2a55c2ca245';
-    // const hourlyUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIkey}&units=metric&lang=es&cnt=9`;
 
     const GeoLocation = () => {
         const [location, setLocation] = useState({});

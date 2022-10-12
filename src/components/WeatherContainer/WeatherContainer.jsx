@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import HourlyWeather from './HourlyWeather/HourlyWeather';
+import clear from '../../assets/clear.mp4';
+// import clouds from '../../assets/clouds.mp4';
+// import rain from '../../assets/rain.mp4';
+// import thunderstorm from '../../assets/clouds_1.mp4';
+// import snow from '../../assets/clouds.mp4';
 
 function WeatherContainer() {
 
@@ -44,15 +49,10 @@ function WeatherContainer() {
             axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&units=metric&appid=${APIkey}&lang=es`)
             .then(res => {
                 setWeather(res.data);
-                // console.log(res.data);
+                console.log(res.data);
             })
         }
     }, [location]);
-
-    // const day = new Date();
-
-    // const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
-    // const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     // const handleSubmit = (e) => {
     //     e.preventDefault();
@@ -76,19 +76,23 @@ function WeatherContainer() {
     //     }
     // }
 
-    const background = {
-        backgroundImage: `url(https://source.unsplash.com/1600x900/?${weather.weather && weather.weather[0].main})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        position: 'relative',
-        height: '100%',
-        width: '100%',
-        zIndex: '-1',
-        top: '0',
-        left: '0',
-        opacity: '0.9',
-    }
+    // const getVideo = () => {
+    //     if (weather.weather) {
+    //         if (weather.weather[0].main === 'Clear') {
+    //             return clear;
+    //         } else if (weather.weather[0].main === 'Clouds') {
+    //             return clouds;
+    //         } else if (weather.weather[0].main === 'Rain') {
+    //             return rain;
+    //         } else if (weather.weather[0].main === 'Thunderstorm') {
+    //             return thunderstorm;
+    //         } else if (weather.weather[0].main === 'Snow') {
+    //             return snow;
+    //         }
+    //     }
+    // }
+
+    // const video = getVideo();
 
     const sunset = () => {
         const sunset = new Date(weather.sys.sunset * 1000);
@@ -128,7 +132,10 @@ function WeatherContainer() {
     }
 
     return (
-        <div className='w-full h-full' style={background}>
+        <div className='w-full h-full'>
+            <video autoPlay loop muted id='video'>
+                <source src={clear} type="video/mp4" />
+            </video>
             {weather.main && (
             <div className='pt-10 sm:grid sm:overflow-hidden sm:grid-cols-3 sm:grid-rows-2 sm:gap-2'>
                 <div className='sm:box sm:row-span-2'>

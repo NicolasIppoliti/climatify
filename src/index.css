@@ -25,3 +25,11 @@ code {
 		min-h-full
 		rounded;
 }
+
+#video {
+  position: fixed;
+  z-index: -1;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.9;
+}
