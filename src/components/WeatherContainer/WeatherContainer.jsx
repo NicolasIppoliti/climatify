@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import HourlyWeather from './HourlyWeather/HourlyWeather';
-import clear from '../../assets/clear.mp4';
-// import clouds from '../../assets/clouds.mp4';
-// import rain from '../../assets/rain.mp4';
-// import thunderstorm from '../../assets/clouds_1.mp4';
-// import snow from '../../assets/clouds.mp4';
+import clear from '../../assets/clear.jpg';
+import clouds from '../../assets/clouds.jpg';
+import rain from '../../assets/rain.jpg';
+import thunderstorm from '../../assets/thunderstorm.jpg';
+import snow from '../../assets/snow.jpg';
 
 function WeatherContainer() {
-
-    // const [city, setCity] = useState('');
     const APIkey = '2651f08b94c06a57dfeac2a55c2ca245';
-    // const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIkey}&units=metric&lang=es`;
 
     const GeoLocation = () => {
         const [location, setLocation] = useState({});
@@ -49,50 +46,28 @@ function WeatherContainer() {
             axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&units=metric&appid=${APIkey}&lang=es`)
             .then(res => {
                 setWeather(res.data);
-                console.log(res.data);
+                // console.log(res.data);
             })
         }
     }, [location]);
 
-    // const handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     axios.get(url)
-    //     .then(res => {
-    //         setWeather(res.data);
-    //     })
-    // }
+    const getBackground = () => {
+        if (weather.weather) {
+            if (weather.weather[0].main === 'Clear') {
+                return clear;
+            } else if (weather.weather[0].main === 'Clouds') {
+                return clouds;
+            } else if (weather.weather[0].main === 'Rain') {
+                return rain;
+            } else if (weather.weather[0].main === 'Thunderstorm') {
+                return thunderstorm;
+            } else if (weather.weather[0].main === 'Snow') {
+                return snow;
+            }
+        }
+    }
 
-    // const handleChange = (e) => {
-    //     setCity(e.target.value);
-    // }
-
-    // const handleKeypress = e => {
-    //     if (e.charCode === 13) {
-    //         e.preventDefault();
-    //         axios.get(url)
-    //         .then(res => {
-    //         setWeather(res.data);
-    //         })
-    //     }
-    // }
-
-    // const getVideo = () => {
-    //     if (weather.weather) {
-    //         if (weather.weather[0].main === 'Clear') {
-    //             return clear;
-    //         } else if (weather.weather[0].main === 'Clouds') {
-    //             return clouds;
-    //         } else if (weather.weather[0].main === 'Rain') {
-    //             return rain;
-    //         } else if (weather.weather[0].main === 'Thunderstorm') {
-    //             return thunderstorm;
-    //         } else if (weather.weather[0].main === 'Snow') {
-    //             return snow;
-    //         }
-    //     }
-    // }
-
-    // const video = getVideo();
+    const background = getBackground();
 
     const sunset = () => {
         const sunset = new Date(weather.sys.sunset * 1000);
@@ -133,9 +108,9 @@ function WeatherContainer() {
 
     return (
         <div className='w-full h-full'>
-            <video autoPlay loop muted id='video'>
-                <source src={clear} type="video/mp4" />
-            </video>
+            <div className='background' id='background'>
+                <img className='background' id='background' src={background} alt="" />
+            </div>
             {weather.main && (
             <div className='pt-10 sm:grid sm:overflow-hidden sm:grid-cols-3 sm:grid-rows-2 sm:gap-2'>
                 <div className='sm:box sm:row-span-2'>

@@ -26,10 +26,15 @@ code {
 		rounded;
 }
 
-#video {
-  position: fixed;
+.background {
+  @apply
+    fixed
+    top-0
+    left-0
+    w-full
+    h-full;
+}
+
+#background {
   z-index: -1;
-  background-position: center;
-  background-size: cover;
-  opacity: 0.9;
 }
